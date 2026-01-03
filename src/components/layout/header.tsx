@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Leaf, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
 
@@ -49,11 +49,14 @@ export function Header() {
                             </Button>
                         </SheetTrigger>
                         <SheetContent side="left">
-                            <div className="flex flex-col h-full">
+                            <SheetHeader>
+                               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                                 <Link href="/" className="mb-8 flex items-center space-x-2">
                                      <Leaf className="h-6 w-6 text-primary" />
                                     <span className="font-bold font-headline text-xl">Rural Escapes</span>
                                 </Link>
+                            </SheetHeader>
+                            <div className="flex flex-col h-full">
                                 <nav className="flex flex-col gap-6 text-lg font-medium">
                                     {navLinks.map((link) => (
                                         <Link
