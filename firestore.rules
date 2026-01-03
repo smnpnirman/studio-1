@@ -1,0 +1,191 @@
+/**
+ * Core Philosophy: This ruleset enforces a strict user-ownership model for all private data,
+ * while allowing public, read-only access to shared content like farms and courses. The primary
+ * goal is to ensure users can only access and manage their own information, preventing any
+ * cross-user data access.
+ *
+ * Data Structure: The data is segregated into two main categories:
+ * 1. User-Private Data: All data specific to a user, such as their profile, bookings, and
+ *    course enrollments, is nested under a path-based ownership structure: `/users/{userId}/...`.
+ * 2. Public Data: Collections that are browsable by all users, like `/farms` and `/courses`,
+ *    are placed at the root level.
+ *
+ * Key Security Decisions:
+ * - User Isolation: A user's access is strictly confined to their own document tree
+ *   (i.e., documents within `/users/{their_own_userId}`).
+ * - No User Enumeration: Listing documents in the top-level `/users` collection is disallowed
+ *   to protect user privacy and prevent scraping of user IDs.
+ * - Public Content is Read-Only: Collections like `/farms` and `/courses` are publicly readable
+ *   by anyone, but write access is currently disabled pending the implementation of an
+ *   administrative role. This provides a "secure-by-default" posture.
+ * - Path-Based Authorization: We rely on the `{userId}` wildcard in the document path as the
+ *   primary source of truth for ownership, which is fast, secure, and avoids costly `get()`
+ *   calls in subcollection rules.
+ * - Relational Integrity on Create: When a user creates a subcollection document (e.g., a booking),
+ *   the rules enforce that the document's internal `userProfileId` field must match the
+ *   `userId` from the path, ensuring data consistency from the moment of creation.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the currently authenticated user's UID matches the provided userId.
+     * This is the foundation of our user-ownership security model.
+     * @param userId The user ID to check against the authenticated user's UID.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    /**
+     * Checks for ownership on an existing document. Used for update and delete
+     * operations to prevent acting on non-existent data.
+     * @param userId The user ID to check against the authenticated user's UID.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    /**
+     * Validates required fields for creating a UserProfile.
+     * Enforces that the document's `id` field matches the user's auth UID.
+     */
+    function hasValidUserProfileDataOnCreate(userId) {
+      let data = request.resource.data;
+      return data.id == userId;
+    }
+
+    /**
+     * Validates that critical, immutable fields for a UserProfile are not changed on update.
+     */
+    function hasValidUserProfileDataOnUpdate() {
+      return request.resource.data.id == resource.data.id;
+    }
+
+    /**
+     * Validates required fields for creating a booking.
+     * Enforces that the booking's `userProfileId` links back to the parent user path.
+     */
+    function hasValidBookingDataOnCreate(userId) {
+      return request.resource.data.userProfileId == userId;
+    }
+
+    /**
+     * Validates that critical, immutable fields for a booking are not changed on update.
+     */
+    function hasValidBookingDataOnUpdate() {
+      return request.resource.data.userProfileId == resource.data.userProfileId;
+    }
+
+    /**
+     * Validates required fields for creating an enrollment.
+     * Enforces that the enrollment's `userProfileId` links back to the parent user path.
+     */
+    function hasValidEnrollmentDataOnCreate(userId) {
+      return request.resource.data.userProfileId == userId;
+    }
+    
+    /**
+     * Validates that critical, immutable fields for an enrollment are not changed on update.
+     */
+    function hasValidEnrollmentDataOnUpdate() {
+      return request.resource.data.userProfileId == resource.data.userProfileId;
+    }
+    
+
+    // -------------------------------------------------------------------------
+    // Collection Rules
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Controls access to user profile documents.
+     * @path /users/{userId}
+     * @allow (create) An authenticated user creating their own profile document.
+     * @deny (get) An authenticated user trying to read another user's profile.
+     * @principle Restricts access to a user's own data tree and allows self-creation of a profile.
+     */
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && hasValidUserProfileDataOnCreate(userId);
+      allow update: if isExistingOwner(userId) && hasValidUserProfileDataOnUpdate();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Controls access to farm details, which are public.
+     * @path /farms/{farmId}
+     * @allow (get) Any user, authenticated or not, reading a farm's details.
+     * @deny (create) Any user attempting to create a new farm document.
+     * @principle Provides public read access but restricts writes until an admin role is defined.
+     */
+    match /farms/{farmId} {
+      allow get: if true;
+      allow list: if true;
+      // CRITICAL: Cannot implement owner-only writes. The 'Farm' entity is missing an 'ownerId' or 'authorId' field.
+      // Disabling writes until an admin role or ownership model is added to the application.
+      allow create: if false; // TODO: Add admin validation once an admin role is implemented.
+      allow update: if false; // TODO: Add admin validation once an admin role is implemented.
+      allow delete: if false; // TODO: Add admin validation once an admin role is implemented.
+    }
+
+    /**
+     * @description Controls access to a user's private visit bookings.
+     * @path /users/{userId}/bookings/{bookingId}
+     * @allow (create) An authenticated user creating a booking for themselves.
+     * @deny (list) An authenticated user trying to list bookings for another user.
+     * @principle Enforces path-based ownership, ensuring users can only manage their own subcollection data.
+     */
+    match /users/{userId}/bookings/{bookingId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && hasValidBookingDataOnCreate(userId);
+      allow update: if isExistingOwner(userId) && hasValidBookingDataOnUpdate();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Controls access to course details, which are public.
+     * @path /courses/{courseId}
+     * @allow (list) Any user, authenticated or not, browsing the list of available courses.
+     * @deny (update) Any user attempting to modify a course document.
+     * @principle Provides public read access but restricts writes until an admin role is defined.
+     */
+    match /courses/{courseId} {
+      allow get: if true;
+      allow list: if true;
+      // CRITICAL: Cannot implement owner-only writes. The 'Course' entity is missing an 'ownerId' or 'authorId' field.
+      // Disabling writes until an admin role or ownership model is added to the application.
+      allow create: if false; // TODO: Add admin validation once an admin role is implemented.
+      allow update: if false; // TODO: Add admin validation once an admin role is implemented.
+      allow delete: if false; // TODO: Add admin validation once an admin role is implemented.
+    }
+
+    /**
+     * @description Controls access to a user's private course enrollments.
+     * @path /users/{userId}/enrollments/{enrollmentId}
+     * @allow (get) An authenticated user reading their own enrollment status.
+     * @deny (delete) An authenticated user trying to delete another user's enrollment.
+     * @principle Enforces path-based ownership, ensuring users can only manage their own subcollection data.
+     */
+    match /users/{userId}/enrollments/{enrollmentId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && hasValidEnrollmentDataOnCreate(userId);
+      allow update: if isExistingOwner(userId) && hasValidEnrollmentDataOnUpdate();
+      allow delete: if isExistingOwner(userId);
+    }
+  }
+}

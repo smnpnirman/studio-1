@@ -1,0 +1,293 @@
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user profile in the Rural Escapes application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UserProfile entity."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "The first name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "format": "email"
+        },
+        "bio": {
+          "type": "string",
+          "description": "A short biography or description of the user."
+        },
+        "facebookId": {
+          "type": "string",
+          "description": "The Facebook ID of the user, used for authentication."
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "facebookId"
+      ]
+    },
+    "Farm": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Farm",
+      "type": "object",
+      "description": "Represents a farm offering visits and experiences.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Farm entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the farm."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the farm and its offerings."
+        },
+        "location": {
+          "type": "string",
+          "description": "The physical location of the farm (e.g., address)."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of an image representing the farm.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "location",
+        "imageUrl"
+      ]
+    },
+    "VisitBooking": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "VisitBooking",
+      "type": "object",
+      "description": "Represents a booking for a farm visit.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the VisitBooking entity."
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N VisitBooking)"
+        },
+        "farmId": {
+          "type": "string",
+          "description": "Reference to Farm. (Relationship: Farm 1:N VisitBooking)"
+        },
+        "bookingDate": {
+          "type": "string",
+          "description": "The date and time of the booking.",
+          "format": "date-time"
+        },
+        "numberOfGuests": {
+          "type": "number",
+          "description": "The number of guests for the booking."
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "farmId",
+        "bookingDate",
+        "numberOfGuests"
+      ]
+    },
+    "Course": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Course",
+      "type": "object",
+      "description": "Represents an online course related to farming and agriculture.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Course entity."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the course."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the course content."
+        },
+        "instructor": {
+          "type": "string",
+          "description": "The name of the course instructor."
+        },
+        "startDate": {
+          "type": "string",
+          "description": "The start date of the course.",
+          "format": "date-time"
+        },
+        "endDate": {
+          "type": "string",
+          "description": "The end date of the course.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "instructor",
+        "startDate",
+        "endDate"
+      ]
+    },
+    "CourseEnrollment": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CourseEnrollment",
+      "type": "object",
+      "description": "Represents a user's enrollment in a course.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CourseEnrollment entity."
+        },
+        "userProfileId": {
+          "type": "string",
+          "description": "Reference to UserProfile. (Relationship: UserProfile 1:N CourseEnrollment)"
+        },
+        "courseId": {
+          "type": "string",
+          "description": "Reference to Course. (Relationship: Course 1:N CourseEnrollment)"
+        },
+        "enrollmentDate": {
+          "type": "string",
+          "description": "The date the user enrolled in the course.",
+          "format": "date-time"
+        },
+        "completionStatus": {
+          "type": "string",
+          "description": "The status of the course completion (e.g., 'In Progress', 'Completed')."
+        }
+      },
+      "required": [
+        "id",
+        "userProfileId",
+        "courseId",
+        "enrollmentDate",
+        "completionStatus"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": {
+            "$ref": "#/backend/entities/UserProfile"
+          },
+          "description": "Stores user profile information. Path-based ownership ensures only the user can access their profile.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/farms/{farmId}",
+        "definition": {
+          "entityName": "Farm",
+          "schema": {
+            "$ref": "#/backend/entities/Farm"
+          },
+          "description": "Stores farm details. Accessible to all users for browsing.",
+          "params": [
+            {
+              "name": "farmId",
+              "description": "The unique identifier of the farm."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/bookings/{bookingId}",
+        "definition": {
+          "entityName": "VisitBooking",
+          "schema": {
+            "$ref": "#/backend/entities/VisitBooking"
+          },
+          "description": "Stores visit booking details for a specific user. Path-based ownership ensures only the user can access their bookings.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "bookingId",
+              "description": "The unique identifier of the visit booking."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/courses/{courseId}",
+        "definition": {
+          "entityName": "Course",
+          "schema": {
+            "$ref": "#/backend/entities/Course"
+          },
+          "description": "Stores course details. Accessible to all users for browsing.",
+          "params": [
+            {
+              "name": "courseId",
+              "description": "The unique identifier of the course."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/enrollments/{enrollmentId}",
+        "definition": {
+          "entityName": "CourseEnrollment",
+          "schema": {
+            "$ref": "#/backend/entities/CourseEnrollment"
+          },
+          "description": "Stores course enrollment details for a specific user. Path-based ownership ensures only the user can access their enrollments.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "enrollmentId",
+              "description": "The unique identifier of the course enrollment."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore data structure is designed to support the Rural Escapes application, focusing on user authentication via Facebook, farm visit bookings, and online course enrollments. The structure prioritizes authorization independence by avoiding hierarchical `get()` calls in security rules. Path-based ownership is used for user-specific data like user profiles and visit bookings. Data is segregated into collections based on security posture.  The structure is optimized for list operations through structural segregation, ensuring QAPs are met by simplifying security rules and avoiding rule-based filtering.\n\nAuthorization Independence is achieved through path-based ownership for user profiles and visit bookings (e.g., `/users/{userId}/bookings/{bookingId}`).  No `get()` calls are required to validate ownership because the path inherently defines the user's access. The `farms` and `courses` collections do not require explicit ownership since all users can browse them.\n\nThe design supports QAPs by segregating data into collections based on their access requirements.  The `farms` and `courses` collections are globally readable, and thus listing all documents in these collections is allowed. User-specific data, such as `visitbookings` and `courseenrollments`, are stored in user-specific subcollections, ensuring that only the user can list their own data."
+  }
+}
