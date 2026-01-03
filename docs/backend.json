@@ -26,18 +26,13 @@
         "bio": {
           "type": "string",
           "description": "A short biography or description of the user."
-        },
-        "facebookId": {
-          "type": "string",
-          "description": "The Facebook ID of the user, used for authentication."
         }
       },
       "required": [
         "id",
         "firstName",
         "lastName",
-        "email",
-        "facebookId"
+        "email"
       ]
     },
     "Farm": {
@@ -195,7 +190,7 @@
     "providers": [
       "password",
       "anonymous",
-      "facebook.com"
+      "google.com"
     ]
   },
   "firestore": {
