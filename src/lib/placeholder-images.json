@@ -1,3 +1,106 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A beautiful, sweeping landscape of a farm at sunrise.",
+      "imageUrl": "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmYXJtJTIwbGFuZHNjYXBlfGVufDB8fHx8MTc2NzM3MTI0OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm landscape"
+    },
+    {
+      "id": "farm-1",
+      "description": "A red barn in a field of green grass.",
+      "imageUrl": "https://images.unsplash.com/photo-1595999218786-62fadf739607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmYXJtJTIwYmFybnxlbnwwfHx8fDE3NjczNzYyMDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm barn"
+    },
+    {
+      "id": "farm-2",
+      "description": "A close-up of a dairy cow in a field.",
+      "imageUrl": "https://images.unsplash.com/photo-1516467508483-a7212febe31a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmYXJtJTIwYW5pbWFsfGVufDB8fHx8MTc2NzQ1NDIwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm animal"
+    },
+    {
+      "id": "farm-3",
+      "description": "An aerial view of an orchard with apple trees.",
+      "imageUrl": "https://images.unsplash.com/photo-1683110752705-f474b57bebc6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmcnVpdCUyMG9yY2hhcmR8ZW58MHx8fHwxNzY3MzU0NTUyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fruit orchard"
+    },
+    {
+      "id": "farm-4",
+      "description": "A field of sunflowers facing the sun.",
+      "imageUrl": "https://images.unsplash.com/photo-1535222830855-fd60aca7e065?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzdW5mbG93ZXIlMjBmaWVsZHxlbnwwfHx8fDE3Njc0Mzk0OTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sunflower field"
+    },
+    {
+      "id": "farm-5",
+      "description": "A rustic farmhouse with a porch.",
+      "imageUrl": "https://images.unsplash.com/photo-1758158452965-ef267a639880?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmYXJtaG91c2UlMjBwb3JjaHxlbnwwfHx8fDE3Njc0NTQyMDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farmhouse porch"
+    },
+    {
+      "id": "farm-6",
+      "description": "Sheep grazing on a green hillside.",
+      "imageUrl": "https://images.unsplash.com/photo-1677576811569-33934044d6ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzaGVlcCUyMGdyYXppbmd8ZW58MHx8fHwxNzY3NDU0MjAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sheep grazing"
+    },
+    {
+      "id": "farm-detail-1",
+      "description": "Interior of a cozy farm cabin with a fireplace.",
+      "imageUrl": "https://images.unsplash.com/photo-1670914120781-4b7c8512fc41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3p5JTIwY2FiaW58ZW58MHx8fHwxNzY3NDU0MjAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cozy cabin"
+    },
+    {
+      "id": "farm-detail-2",
+      "description": "A path leading through a vineyard.",
+      "imageUrl": "https://images.unsplash.com/photo-1759064971929-3d7c9b35f2e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx2aW5leWFyZCUyMHBhdGh8ZW58MHx8fHwxNzY3NDU0MjAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "vineyard path"
+    },
+    {
+      "id": "farm-detail-3",
+      "description": "Freshly picked vegetables in a basket.",
+      "imageUrl": "https://images.unsplash.com/photo-1610348725531-843dff563e2c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxmcmVzaCUyMHZlZ2V0YWJsZXN8ZW58MHx8fHwxNzY3MzYyNDM1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh vegetables"
+    },
+    {
+      "id": "course-1",
+      "description": "Hands kneading dough on a floured surface.",
+      "imageUrl": "https://images.unsplash.com/photo-1616901166077-4d3ed3502cd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YmFraW5nJTIwYnJlYWR8ZW58MHx8fHwxNzY3NDU0MjAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "baking bread"
+    },
+    {
+      "id": "course-2",
+      "description": "A variety of cheeses on a wooden board.",
+      "imageUrl": "https://images.unsplash.com/photo-1678572823447-45fc146df43c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxjaGVlc2UlMjBib2FyZHxlbnwwfHx8fDE3Njc0NDQxODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cheese board"
+    },
+    {
+      "id": "course-3",
+      "description": "A beekeeper inspecting a honeycomb frame.",
+      "imageUrl": "https://images.unsplash.com/photo-1586779161295-3cc8a3ef00bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxiZWVrZWVwaW5nJTIwaG9uZXl8ZW58MHx8fHwxNzY3NDU0MjAyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "beekeeping honey"
+    },
+    {
+      "id": "course-4",
+      "description": "Hands potting a small plant in a garden.",
+      "imageUrl": "https://images.unsplash.com/photo-1638048258637-853c0d0bbdde?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxnYXJkZW5pbmclMjBwbGFudHN8ZW58MHx8fHwxNzY3MzY5MTkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gardening plants"
+    },
+    {
+      "id": "course-5",
+      "description": "A person weaving on a traditional loom.",
+      "imageUrl": "https://images.unsplash.com/photo-1630551628028-08093ac538fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx3ZWF2aW5nJTIwbG9vbXxlbnwwfHx8fDE3Njc0NTQyMDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "weaving loom"
+    },
+    {
+      "id": "course-6",
+      "description": "A collection of handmade soaps curing on a rack.",
+      "imageUrl": "https://images.unsplash.com/photo-1584305574647-0cc949a2bb9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzb2FwJTIwbWFraW5nfGVufDB8fHx8MTc2NzQ1NDIwMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "soap making"
+    },
+    {
+      "id": "user-avatar",
+      "description": "A friendly-looking person.",
+      "imageUrl": "https://images.unsplash.com/photo-1695927621677-ec96e048dce2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmlsZSUyMHBvcnRyYWl0fGVufDB8fHx8MTc2NzQxOTI5MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "profile portrait"
+    }
+  ]
 }

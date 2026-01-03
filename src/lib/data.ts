@@ -1,0 +1,201 @@
+export const farms = [
+  {
+    id: 'green-valley-farm',
+    name: 'Green Valley Farm',
+    location: 'Sonoma, CA',
+    description: 'A family-owned organic farm nestled in a lush valley. We specialize in dairy and produce.',
+    longDescription: 'Green Valley Farm has been in our family for four generations. We pride ourselves on sustainable agriculture and providing a peaceful retreat for visitors. Explore our rolling hills, meet our friendly dairy cows, and taste the difference of truly fresh, organic food. Our farm store is stocked daily with fresh milk, cheese, eggs, and seasonal vegetables.',
+    imagePlaceholder: 'farm-1',
+    gallery: ['farm-detail-1', 'farm-2', 'farm-detail-3'],
+    activities: ['Cow Milking', 'Cheese Making Workshop', 'Farm-to-Table Dinner', 'Hiking Trails'],
+    rating: 4.8,
+    reviews: 124,
+  },
+  {
+    id: 'whispering-pines',
+    name: 'Whispering Pines',
+    location: 'Asheville, NC',
+    description: 'A serene mountain retreat known for its beautiful alpaca herd and fiber arts.',
+    longDescription: 'Escape to the Blue Ridge Mountains at Whispering Pines. Our farm is a sanctuary for alpacas, whose luxurious fleece is used in our on-site fiber arts studio. Guests can enjoy guided treks with the alpacas, learn to spin and weave, or simply relax and take in the stunning mountain views. Our accommodations are rustic yet comfortable, offering a perfect getaway.',
+    imagePlaceholder: 'farm-2',
+    gallery: ['farm-detail-2', 'farm-6', 'farm-detail-1'],
+    activities: ['Alpaca Trekking', 'Fiber Arts Class', 'Stargazing', 'Mountain Biking'],
+    rating: 4.9,
+    reviews: 98,
+  },
+  {
+    id: 'sunny-orchard',
+    name: 'Sunny Orchard',
+    location: 'Upstate, NY',
+    description: 'A vibrant orchard where you can pick your own apples, peaches, and berries.',
+    longDescription: 'Sunny Orchard is a celebration of fruit! Depending on the season, you can wander through rows of trees picking your own apples, peaches, plums, and cherries. We also have extensive berry patches. Our farm market offers delicious baked goods, homemade jams, and fresh-pressed cider. It\'s a perfect family outing.',
+    imagePlaceholder: 'farm-3',
+    gallery: ['farm-detail-3', 'farm-3', 'farm-detail-2'],
+    activities: ['Fruit Picking', 'Baking Classes', 'Cider Pressing Demo', 'Hayrides'],
+    rating: 4.7,
+    reviews: 210,
+  },
+  {
+    id: 'coastal-homestead',
+    name: 'Coastal Homestead',
+    location: 'Big Sur, CA',
+    description: 'A rugged coastal homestead offering stunning ocean views and goat yoga.',
+    longDescription: 'Perched on the cliffs of Big Sur, Coastal Homestead is a unique blend of farm life and oceanfront living. Our herd of Nigerian Dwarf goats are not only part of our dairy operation but also the stars of our popular goat yoga classes. Enjoy fresh goat cheese, explore tide pools, and watch the sunset over the Pacific.',
+    imagePlaceholder: 'farm-4',
+    gallery: ['farm-detail-1', 'farm-6', 'farm-detail-2'],
+    activities: ['Goat Yoga', 'Cheesemaking', 'Coastal Hikes', 'Tide Pooling'],
+    rating: 4.9,
+    reviews: 155,
+  },
+  {
+    id: 'prairie-creek-ranch',
+    name: 'Prairie Creek Ranch',
+    location: 'Bozeman, MT',
+    description: 'A working horse ranch offering trail rides and a taste of the cowboy lifestyle.',
+    longDescription: 'Saddle up for an authentic Western adventure at Prairie Creek Ranch. We offer guided trail rides for all skill levels through breathtaking Montana landscapes. Learn the basics of horsemanship, help with ranch chores, and gather around the campfire at night for stories and songs. It\'s an unforgettable experience under the big sky.',
+    imagePlaceholder: 'farm-5',
+    gallery: ['farm-detail-2', 'farm-5', 'farm-detail-1'],
+    activities: ['Horseback Riding', 'Cattle Driving', 'Campfire Cookouts', 'Fly Fishing'],
+    rating: 4.8,
+    reviews: 180,
+  },
+  {
+    id: 'riverbend-vineyards',
+    name: 'Riverbend Vineyards',
+    location: 'Napa, CA',
+    description: 'An elegant vineyard estate offering wine tasting and luxury accommodations.',
+    longDescription: 'Indulge your senses at Riverbend Vineyards. Stroll through our picturesque vineyards, learn about the winemaking process from grape to glass, and enjoy curated tastings of our award-winning wines. Our luxury suites offer private balconies with vineyard views, providing a sophisticated and relaxing escape in the heart of wine country.',
+    imagePlaceholder: 'farm-6',
+    gallery: ['farm-detail-2', 'farm-detail-3', 'farm-detail-1'],
+    activities: ['Wine Tasting', 'Vineyard Tours', 'Gourmet Food Pairing', 'Spa Services'],
+    rating: 5.0,
+    reviews: 250,
+  }
+];
+
+export const courses = [
+  {
+    id: 'sourdough-basics',
+    title: 'Artisan Sourdough Made Simple',
+    instructor: 'Maria Sanchez',
+    description: 'Master the art of naturally leavened bread from starter to bake.',
+    imagePlaceholder: 'course-1',
+    duration: '4 Weeks',
+    level: 'Beginner',
+    syllabus: [
+      { week: 1, topic: 'Creating and Maintaining a Sourdough Starter' },
+      { week: 2, topic: 'Mixing, Kneading, and Bulk Fermentation' },
+      { week: 3, topic: 'Shaping, Proofing, and Scoring Techniques' },
+      { week: 4, topic: 'Baking the Perfect Loaf and Using Discard' },
+    ]
+  },
+  {
+    id: 'cheesemaking-101',
+    title: 'Introduction to Cheesemaking',
+    instructor: 'David Chen',
+    description: 'Learn to make fresh cheeses like mozzarella, ricotta, and chèvre at home.',
+    imagePlaceholder: 'course-2',
+    duration: '3 Sessions',
+    level: 'Beginner',
+    syllabus: [
+      { week: 1, topic: 'The Science of Milk and Coagulation' },
+      { week: 2, topic: 'Making Fresh Cheeses: Mozzarella & Ricotta' },
+      { week: 3, topic: 'Cultured Cheeses: Chèvre & Fromage Blanc' },
+    ]
+  },
+  {
+    id: 'backyard-beekeeping',
+    title: 'Backyard Beekeeping',
+    instructor: 'Emily White',
+    description: 'A comprehensive guide to starting your own beehive and harvesting honey.',
+    imagePlaceholder: 'course-3',
+    duration: '6 Weeks',
+    level: 'Beginner to Intermediate',
+    syllabus: [
+        { week: 1, topic: 'Bee Biology and Hive Society' },
+        { week: 2, topic: 'Equipment and Setting Up Your First Hive' },
+        { week: 3, topic: 'Hive Inspections and Seasonal Management' },
+        { week: 4, topic: 'Pest and Disease Management' },
+        { week: 5, topic: 'The Honey Harvest: Extraction and Processing' },
+        { week: 6, topic: 'Preparing Hives for Winter' },
+    ]
+  },
+  {
+    id: 'organic-gardening',
+    title: 'Organic Vegetable Gardening',
+    instructor: 'Sam Richards',
+    description: 'Grow your own delicious, organic vegetables from seed to harvest.',
+    imagePlaceholder: 'course-4',
+    duration: '8 Weeks',
+    level: 'Beginner',
+     syllabus: [
+        { week: 1, topic: 'Garden Planning and Design' },
+        { week: 2, topic: 'Soil Health and Composting' },
+        { week: 3, topic: 'Starting Seeds and Transplanting' },
+        { week: 4, topic: 'Watering and Weeding Strategies' },
+        { week: 5, topic: 'Organic Pest and Disease Control' },
+        { week: 6, topic: 'Companion Planting' },
+        { week: 7, topic: 'Harvesting and Storing Your Produce' },
+        { week: 8, topic: 'Seed Saving for Next Season' },
+    ]
+  },
+  {
+    id: 'natural-dyes',
+    title: 'The Art of Natural Dyes',
+    instructor: 'Isabella Rossi',
+    description: 'Explore the vibrant world of color using plants, minerals, and insects.',
+    imagePlaceholder: 'course-5',
+    duration: '4 Sessions',
+    level: 'All Levels',
+     syllabus: [
+        { week: 1, topic: 'Introduction to Natural Dyes and Mordants' },
+        { week: 2, topic: 'Dyeing with Kitchen Scraps (Onion Skins, Avocado Pits)' },
+        { week: 3, topic: 'Foraging for Dye Plants' },
+        { week: 4, topic: 'Shibori and Resist Dyeing Techniques' },
+    ]
+  },
+  {
+    id: 'soap-making',
+    title: 'Handmade Cold Process Soap',
+    instructor: 'Ben Carter',
+    description: 'Create beautiful, nourishing soaps from scratch using natural oils and butters.',
+    imagePlaceholder: 'course-6',
+    duration: '1 Day Workshop',
+    level: 'Beginner',
+     syllabus: [
+        { week: 1, topic: 'Safety and Equipment' },
+        { week: 2, topic: 'Understanding Oils and Lye Calculation' },
+        { week: 3, topic: 'Making and Scenting Your First Batch' },
+        { week: 4, topic: 'Cutting, Curing, and Troubleshooting' },
+    ]
+  }
+];
+
+export const bookings = [
+    {
+        id: 'booking-1',
+        type: 'farm',
+        itemId: 'green-valley-farm',
+        date: new Date(new Date().setDate(new Date().getDate() + 14)),
+        guests: 2,
+    },
+    {
+        id: 'booking-2',
+        type: 'course',
+        itemId: 'sourdough-basics',
+        startDate: new Date(new Date().setDate(new Date().getDate() + 5)),
+    },
+    {
+        id: 'booking-3',
+        type: 'farm',
+        itemId: 'whispering-pines',
+        date: new Date(new Date().setDate(new Date().getDate() + 45)),
+        guests: 4,
+    }
+];
+
+export const user = {
+    name: 'Alex Doe',
+    email: 'alex.doe@example.com',
+    avatarPlaceholder: 'user-avatar'
+};
