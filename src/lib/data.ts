@@ -193,9 +193,3 @@ export const bookings = [
         guests: 4,
     }
 ];
-
-export const user = {
-    name: 'Alex Doe',
-    email: 'alex.doe@example.com',
-    avatarPlaceholder: 'user-avatar'
-};

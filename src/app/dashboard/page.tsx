@@ -1,5 +1,6 @@
+'use client';
 import Image from "next/image";
-import { user, bookings, farms, courses } from "@/lib/data";
+import { bookings, farms, courses } from "@/lib/data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,9 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Users, BookOpen } from "lucide-react";
 import Link from "next/link";
+import { useUser } from "@/firebase";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardPage() {
-  const avatarImage = PlaceHolderImages.find(p => p.id === user.avatarPlaceholder);
+  const { user, isUserLoading } = useUser();
 
   const farmBookings = bookings.filter(b => b.type === 'farm').map(booking => {
       const farm = farms.find(f => f.id === booking.itemId);
@@ -21,15 +24,27 @@ export default function DashboardPage() {
       return { ...booking, item: course };
   });
 
+  const welcomeName = user?.displayName?.split(' ')[0] || 'there';
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
       <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
         <Avatar className="h-24 w-24 border-4 border-primary/50">
-          {avatarImage && <AvatarImage src={avatarImage.imageUrl} alt={user.name} data-ai-hint={avatarImage.imageHint} />}
-          <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+           {isUserLoading ? (
+            <Skeleton className="h-full w-full rounded-full" />
+           ) : (
+            <>
+              <AvatarImage src={user?.photoURL ?? ''} alt={user?.displayName ?? ''} />
+              <AvatarFallback>{user?.displayName?.charAt(0) ?? user?.email?.charAt(0)}</AvatarFallback>
+            </>
+           )}
         </Avatar>
         <div>
-          <h1 className="text-4xl font-bold font-headline">Welcome back, {user.name.split(' ')[0]}!</h1>
+          {isUserLoading ? (
+            <Skeleton className="h-10 w-64" />
+          ) : (
+            <h1 className="text-4xl font-bold font-headline">Welcome back, {welcomeName}!</h1>
+          )}
           <p className="text-muted-foreground text-lg">Here's your schedule of upcoming rural escapes.</p>
         </div>
       </div>
