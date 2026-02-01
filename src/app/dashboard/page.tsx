@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { bookings, farms, courses } from "@/lib/data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { Calendar, Clock, MapPin, Users, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@/firebase";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ProfileAvatarUploader } from "@/components/profile-avatar-uploader";
 
 export default function DashboardPage() {
   const { user, isUserLoading } = useUser();
@@ -29,16 +29,7 @@ export default function DashboardPage() {
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
       <div className="flex flex-col md:flex-row items-center gap-6 mb-12">
-        <Avatar className="h-24 w-24 border-4 border-primary/50">
-           {isUserLoading ? (
-            <Skeleton className="h-full w-full rounded-full" />
-           ) : (
-            <>
-              <AvatarImage src={user?.photoURL ?? ''} alt={user?.displayName ?? ''} />
-              <AvatarFallback>{user?.displayName?.charAt(0) ?? user?.email?.charAt(0)}</AvatarFallback>
-            </>
-           )}
-        </Avatar>
+        <ProfileAvatarUploader />
         <div>
           {isUserLoading ? (
             <Skeleton className="h-10 w-64" />
