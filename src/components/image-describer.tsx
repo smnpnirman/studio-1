@@ -2,11 +2,15 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { UploadCloud, LoaderCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { describeImage } from '@/ai/flows/describe-image-flow';
+import { useUser, useFirestore, useStorage, addDocumentNonBlocking } from '@/firebase';
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { collection, serverTimestamp } from 'firebase/firestore';
 
 export function ImageDescriber() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -14,6 +18,9 @@ export function ImageDescriber() {
   const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState<string | null>(null);
   const { toast } = useToast();
+  const { user, isUserLoading } = useUser();
+  const firestore = useFirestore();
+  const storage = useStorage();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -34,23 +41,59 @@ export function ImageDescriber() {
 
   const handleDescribe = async () => {
     if (!selectedFile) return;
+    if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Please log in',
+        description: 'You need to be logged in to save uploaded images.',
+      });
+      return;
+    }
 
     setLoading(true);
     setDescription(null);
 
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
+
     reader.onload = async () => {
       const dataUri = reader.result as string;
       try {
-        const result = await describeImage({ photoDataUri: dataUri });
-        setDescription(result);
+        const [descriptionResult, uploadResult] = await Promise.all([
+          describeImage({ photoDataUri: dataUri }),
+          (async () => {
+            if (!storage || !user) throw new Error("Not logged in or storage not available.");
+            const imageRef = storageRef(storage, `users/${user.uid}/uploadedImages/${Date.now()}-${selectedFile.name}`);
+            const snapshot = await uploadBytes(imageRef, selectedFile);
+            return await getDownloadURL(snapshot.ref);
+          })()
+        ]);
+        
+        const downloadURL = uploadResult;
+        setDescription(descriptionResult);
+
+        if (firestore) {
+          const uploadedImagesCol = collection(firestore, `users/${user.uid}/uploadedImages`);
+          
+          addDocumentNonBlocking(uploadedImagesCol, {
+              userId: user.uid,
+              imageUrl: downloadURL,
+              description: descriptionResult,
+              createdAt: serverTimestamp()
+          }).then(() => {
+              toast({
+                title: 'Image Saved!',
+                description: 'Your image and its description have been saved to your collection.',
+              });
+          });
+        }
+
       } catch (error: any) {
-        console.error('AI error:', error);
+        console.error('Error during upload or description:', error);
         toast({
           variant: 'destructive',
-          title: 'Analysis failed',
-          description: error.message || 'There was a problem analyzing your image.',
+          title: 'Something went wrong',
+          description: error.message || 'There was a problem processing your image.',
         });
       } finally {
         setLoading(false);
@@ -87,14 +130,21 @@ export function ImageDescriber() {
             )}
             <input id="image-upload" type="file" accept="image/png, image/jpeg, image/webp" className="sr-only" onChange={handleFileChange} disabled={loading} />
           </label>
+          
+          {!user && !isUserLoading && (
+            <p className="text-sm text-center text-muted-foreground">
+              <Link href="/login" className="underline text-primary">Login</Link> to save your uploaded images.
+            </p>
+          )}
+
           {selectedFile && (
             <div className="w-full flex flex-col items-center gap-2">
                 <p className="text-sm text-muted-foreground truncate w-full text-center">
                     {selectedFile.name}
                 </p>
-                <Button onClick={handleDescribe} disabled={loading || !selectedFile} className="w-full">
+                <Button onClick={handleDescribe} disabled={loading || !selectedFile || !user} className="w-full">
                     {loading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : null}
-                    {loading ? 'Analyzing...' : 'Describe Image'}
+                    {loading ? 'Analyzing...' : 'Describe & Save Image'}
                 </Button>
             </div>
           )}

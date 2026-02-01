@@ -103,6 +103,22 @@ service cloud.firestore {
     function hasValidEnrollmentDataOnUpdate() {
       return request.resource.data.userProfileId == resource.data.userProfileId;
     }
+
+    /**
+     * Validates required fields for creating an uploaded image record.
+     * Enforces that the record's `userId` links back to the parent user path.
+     */
+    function hasValidUploadedImageDataOnCreate(userId) {
+      let data = request.resource.data;
+      return data.userId == userId;
+    }
+
+    /**
+     * Validates that critical, immutable fields for an uploaded image are not changed on update.
+     */
+    function hasValidUploadedImageDataOnUpdate() {
+      return request.resource.data.userId == resource.data.userId;
+    }
     
 
     // -------------------------------------------------------------------------
@@ -185,6 +201,21 @@ service cloud.firestore {
       allow list: if isOwner(userId);
       allow create: if isOwner(userId) && hasValidEnrollmentDataOnCreate(userId);
       allow update: if isExistingOwner(userId) && hasValidEnrollmentDataOnUpdate();
+      allow delete: if isExistingOwner(userId);
+    }
+
+    /**
+     * @description Controls access to a user's uploaded images.
+     * @path /users/{userId}/uploadedImages/{imageId}
+     * @allow (create) An authenticated user creating an image record for themselves.
+     * @deny (list) An authenticated user trying to list images for another user.
+     * @principle Enforces path-based ownership, ensuring users can only manage their own subcollection data.
+     */
+    match /users/{userId}/uploadedImages/{imageId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && hasValidUploadedImageDataOnCreate(userId);
+      allow update: if isExistingOwner(userId) && hasValidUploadedImageDataOnUpdate();
       allow delete: if isExistingOwner(userId);
     }
   }

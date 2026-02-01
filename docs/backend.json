@@ -184,6 +184,41 @@
         "enrollmentDate",
         "completionStatus"
       ]
+    },
+    "UploadedImage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UploadedImage",
+      "type": "object",
+      "description": "Represents an image uploaded by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the UploadedImage entity."
+        },
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who uploaded the image."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the uploaded image in Firebase Storage.",
+          "format": "uri"
+        },
+        "description": {
+          "type": "string",
+          "description": "AI-generated description of the image."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "The date and time the image was uploaded.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "userId",
+        "imageUrl",
+        "createdAt"
+      ]
     }
   },
   "auth": {
@@ -279,6 +314,26 @@
             {
               "name": "enrollmentId",
               "description": "The unique identifier of the course enrollment."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/uploadedImages/{imageId}",
+        "definition": {
+          "entityName": "UploadedImage",
+          "schema": {
+            "$ref": "#/backend/entities/UploadedImage"
+          },
+          "description": "Stores images uploaded by a user.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "imageId",
+              "description": "The unique identifier of the uploaded image."
             }
           ]
         }
