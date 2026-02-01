@@ -6,8 +6,9 @@ import { farms, courses } from "@/lib/data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { FarmCard } from "@/components/farm-card";
 import { CourseCard } from "@/components/course-card";
-import { TractorIcon, SproutIcon, BookOpenCheckIcon } from "@/components/icons";
+import { TractorIcon, SproutIcon, BookOpenCheckIcon, WandSparkles } from "@/components/icons";
 import { ArrowRight } from "lucide-react";
+import { ImageDescriber } from "@/components/image-describer";
 
 export default function Home() {
   const heroImage = PlaceHolderImages.find(p => p.id === "hero-1");
@@ -102,6 +103,21 @@ export default function Home() {
       </section>
 
       <section className="w-full py-12 md:py-20 lg:py-24 bg-background">
+        <div className="container px-4 md:px-6 flex flex-col items-center">
+          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+            <WandSparkles className="h-10 w-10 text-primary" />
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-accent">
+              Powered by AI
+            </h2>
+            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Have a picture of a plant, animal, or a scenic view? Our AI can tell you more about it. Give it a try!
+            </p>
+          </div>
+          <ImageDescriber />
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-20 lg:py-24">
         <div className="container px-4 md:px-6">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline">Popular Courses</h2>
