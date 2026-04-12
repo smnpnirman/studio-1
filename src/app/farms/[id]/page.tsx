@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { farms } from "@/lib/data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,10 @@ import { Check, MapPin, Star, Users } from "lucide-react";
 import React from "react";
 import { useToast } from "@/hooks/use-toast";
 
-export default function FarmDetailPage({ params }: { params: { id: string } }) {
-  const farm = farms.find((f) => f.id === params.id);
+export default function FarmDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
+  const farm = farms.find((f) => f.id === id);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const { toast } = useToast();
 
@@ -29,7 +31,6 @@ export default function FarmDetailPage({ params }: { params: { id: string } }) {
       duration: 5000,
     });
   }
-
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">

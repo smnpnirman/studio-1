@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Leaf, Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
 import { useUser, useAuth } from "@/firebase";
@@ -94,7 +94,10 @@ export function Header() {
                         </SheetTrigger>
                         <SheetContent side="left">
                             <SheetHeader>
-                               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                               <SheetTitle>Navigation Menu</SheetTitle>
+                               <SheetDescription className="sr-only">
+                                 Access all sections of Rural Escapes.
+                               </SheetDescription>
                                 <Link href="/" className="mb-8 flex items-center space-x-2">
                                      <Leaf className="h-6 w-6 text-primary" />
                                     <span className="font-bold font-headline text-xl">Rural Escapes</span>

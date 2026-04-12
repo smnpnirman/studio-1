@@ -2,15 +2,17 @@
 import Image from "next/image";
 import { courses } from "@/lib/data";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Clock, Layers, User } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export default function CourseDetailPage({ params }: { params: { id: string } }) {
-  const course = courses.find((c) => c.id === params.id);
+export default function CourseDetailPage() {
+  const params = useParams();
+  const id = params?.id as string;
+  const course = courses.find((c) => c.id === id);
   const { toast } = useToast();
 
   if (!course) {
