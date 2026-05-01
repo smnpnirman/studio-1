@@ -1,7 +1,6 @@
 'use client';
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import { bookings, farms, courses } from "@/lib/data";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -13,18 +12,34 @@ import { ProfileAvatarUploader } from "@/components/profile-avatar-uploader";
 
 export default function DashboardPage() {
   const { user, isUserLoading } = useUser();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const farmBookings = bookings.filter(b => b.type === 'farm').map(booking => {
       const farm = farms.find(f => f.id === booking.itemId);
-      return { ...booking, item: farm };
+      const date = booking.dateString ? new Date(booking.dateString) : null;
+      return { ...booking, item: farm, date };
   });
 
   const courseBookings = bookings.filter(b => b.type === 'course').map(booking => {
       const course = courses.find(c => c.id === booking.itemId);
-      return { ...booking, item: course };
+      const startDate = booking.startDateString ? new Date(booking.startDateString) : null;
+      return { ...booking, item: course, startDate };
   });
 
   const welcomeName = user?.displayName?.split(' ')[0] || 'there';
+
+  if (!mounted) {
+    return (
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        <Skeleton className="h-10 w-64 mb-12" />
+        <Skeleton className="h-[400px] w-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">

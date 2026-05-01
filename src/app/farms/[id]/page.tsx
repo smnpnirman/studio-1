@@ -9,15 +9,20 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Check, MapPin, Star, Users } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function FarmDetailPage() {
   const params = useParams();
   const id = params?.id as string;
   const farm = farms.find((f) => f.id === id);
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(undefined);
   const { toast } = useToast();
+
+  // Handle hydration mismatch for new Date()
+  useEffect(() => {
+    setDate(new Date());
+  }, []);
 
   if (!farm) {
     notFound();

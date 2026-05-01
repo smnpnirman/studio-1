@@ -176,20 +176,20 @@ export const bookings = [
         id: 'booking-1',
         type: 'farm',
         itemId: 'green-valley-farm',
-        date: new Date(new Date().setDate(new Date().getDate() + 14)),
+        dateString: "2024-07-20",
         guests: 2,
     },
     {
         id: 'booking-2',
         type: 'course',
         itemId: 'sourdough-basics',
-        startDate: new Date(new Date().setDate(new Date().getDate() + 5)),
+        startDateString: "2024-07-10",
     },
     {
         id: 'booking-3',
         type: 'farm',
         itemId: 'whispering-pines',
-        date: new Date(new Date().setDate(new Date().getDate() + 45)),
+        dateString: "2024-08-15",
         guests: 4,
     }
 ];
