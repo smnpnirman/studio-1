@@ -32,7 +32,7 @@ export default function Home() {
             Rural Escapes
           </h1>
           <p className="mt-4 max-w-2xl text-lg md:text-xl">
-            Discover authentic farm stays, hands-on workshops, and the tranquility of the countryside.
+            Discover authentic farm stays, hands-on workshops, and the tranquility of the countryside. DEOGHAR 
           </p>
           <Button asChild size="lg" className="mt-8 bg-accent hover:bg-accent/90 text-accent-foreground">
             <Link href="/farms">Explore Farms</Link>
@@ -48,7 +48,7 @@ export default function Home() {
                 Why Choose Chandra Malti Farm?
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                We offer a curated selection of unique rural experiences that connect you with nature and local culture.
+                We offer a curated selection of unique rural experiences that connect you with nature and local culture.of deoghar 
               </p>
             </div>
           </div>
